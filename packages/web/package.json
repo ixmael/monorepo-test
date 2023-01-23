@@ -1,6 +1,6 @@
 {
   "name": "@bayonet/web",
-  "version": "3.0.1-alpha.1",
+  "version": "3.0.1-alpha.2",
   "main": "dist/analytics.js",
   "module": "dist/analytics.ems.js",
   "types": "dist/types.d.ts",
