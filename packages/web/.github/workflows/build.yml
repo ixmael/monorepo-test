@@ -1,0 +1,49 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build the project and deploy
+    steps:
+      - name: Set environment variables for production
+        if: endsWith(github.ref, 'master')
+        run: |
+          echo "AWS_S3_ENV_PATH=${{ secrets.AWS_S3_ENV_PATH_PROD }}" >> $GITHUB_ENV
+          echo "AWS_S3_BUILD_PATH=${{ secrets.AWS_S3_BUILD_PATH_PROD }}" >> $GITHUB_ENV
+      - name: Set environment variables for staging
+        if: endsWith(github.ref, 'staging')
+        run: |
+          echo "AWS_S3_ENV_PATH=${{ secrets.AWS_S3_ENV_PATH_STAGING }}" >> $GITHUB_ENV
+          echo "AWS_S3_BUILD_PATH=${{ secrets.AWS_S3_BUILD_PATH_STAGING }}" >> $GITHUB_ENV
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Download the .env file
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws s3 cp s3://$AWS_S3_ENV_PATH .
+      - name: Prepare the docker image
+        run: docker build -f infrastructure/docker/build/Dockerfile -t bayonetio/fingerprint-frontend-v3 .
+      - name: Build the project
+        run: docker run --volume=$(pwd):/opt/var/fingerprint-frontend-v3 --name bayonetio-fingerprint-frontend-v3 bayonetio/fingerprint-frontend-v3:latest
+      - name: Publish package on NPM 📦
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH_TOKEN
+          npm publish --access public
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws s3 cp "dist/$(ls -ltr dist | tail -1 | awk '{print $9}')" "s3://$AWS_S3_BUILD_PATH"

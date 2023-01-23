@@ -1,0 +1,54 @@
+<html>
+
+<head></head>
+
+<body>
+  <div>Fingerprint Test</div>
+  <ul id="response">
+    <li id="response-token">Token: <span id="response-token-value"></span></div>
+    <li id="response-fetch">Body: <span id="response-fetch-value"></span></div>
+    <li id="response-fetch-status">Status: <span id="response-fetch-status-value"></span></div>
+  </ul>
+  <!--
+  <script onload="initBayonet();" src="http://localhost:3100/js/analytics.js" async>
+  </script>
+  -->
+  <script>
+    fetch('http://10.0.2.2:9000/v3/ping')
+      .then(function(response) {
+        console.log('status: ', response.status);
+        return response.text();
+      })
+      .then(function(text) {
+        console.log('text: ', text);
+        // .then(response=>response.json())
+        // .then(data=>{ console.log(data); })
+        const fetchHTML = document.getElementById('response-fetch-value');
+        fetchHTML.textContent = '- ' + text + ' -';
+      })
+      .catch(function(err) {
+        console.log('fetch-error', err);
+      });
+    function initBayonet() {
+      console.log('init bayonet');
+      _bayonet.init({
+        js_key: "123456789",
+        callback_function: "callback"
+      });
+      _bayonet.track();
+    }
+
+    function callback(response) {
+      // console.log(
+      //   "Bayonet fingerprint token: " + response.bayonet_fingerprint_token
+      // );
+      // console.log("Status: " + response.status);
+      const tokenHTML = document.getElementById('response-token-value');
+
+      // status.textContent = params.status;
+      tokenHTML.textContent = token.token;
+    }
+  </script>
+</body>
+
+</html>

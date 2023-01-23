@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["dom"],
+    "strict": true,
+    "esModuleInterop": false,
+    "outDir": "build",
+    "rootDir": "./",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src/",
+    "paths": {
+      "Api/*": ["Api/*"],
+      "Services/*": ["Services/*"],
+      "Utils/*": ["Utils/*"]
+    },
+    "types": ["node", "mocha", "chai", "jsdom"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "build", "public", "tests", "src/**/__tests__"]
+}

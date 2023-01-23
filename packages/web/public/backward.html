@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+</head>
+
+<body>
+    <div>Fingerprint Test</div>
+    <ul id="response">
+      <li id="response-token">Token: <span id="response-token-value"></span></div>
+    </ul>
+
+    <!-- <script onload="initBayonet();" src="https://cdn.bayonet.io/fingerprinting-2.0.min.js" async></script> -->
+    <script onload="initBayonet();" src="js/analytics.js" async></script>
+    <script type="text/javascript">
+      function initBayonet() {
+        _bayonet.init({
+          js_key: '12345678',
+          callback_function: "myCallbackFunction"
+        }); 
+        _bayonet.track();
+      }
+      function myCallbackFunction ( response ) {
+        console.log('myCallbackFunction', response);
+        // console.log("Bayonet fingerprint token: " + response.bayonet_fingerprint_token);
+        // console.log("Status: " + response.status);
+
+        // const status = document.getElementById('response-status-value');
+        const tokenHTML = document.getElementById('response-token-value');
+
+        // status.textContent = params.status;
+        tokenHTML.textContent = response.bayonet_fingerprint_token;
+      }
+    </script>
+</body>
+
+</html>

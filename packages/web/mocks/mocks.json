@@ -1,0 +1,11 @@
+[
+  {
+    "id": "base",
+    "routesVariants": [
+      "ping:success",
+      "token:success",
+      "refresh:success",
+      "augur:success"
+    ]
+  }
+]

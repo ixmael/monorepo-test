@@ -1,0 +1,11 @@
+node_modules
+dist
+
+examples/**/node_modules
+
+.env*
+!.env.*.example
+
+cypress
+tests/e2e/videos/**
+!tests/e2e/videos/.gitkeep

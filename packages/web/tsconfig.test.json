@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["dom"],
+    "strict": true,
+    "esModuleInterop": false,
+    "outDir": "build",
+    "rootDir": "./src",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "inlineSourceMap": true,
+    "baseUrl": "src/",
+    "paths": {
+      "Services/*": ["Services/*"],
+      "Utils/*": ["Utils/*"]
+    },
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "mocha", "chai"]
+  },
+  "include": ["src/**/*.ts"]
+}

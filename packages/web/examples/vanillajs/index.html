@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div>Fingerprint Test</div>
+    <ul id="response">
+      <li id="response-token">Token: <span id="response-token-value"></span></div>
+    </ul>
+    <script onload="initBayonet();" src="js/analytics.js" async></script>
+    <script type="text/javascript">
+        function initBayonet() {
+            bayonet.analyze({
+                jsKey: '12345678',
+                onAnalyzedCallback: function (token) { 
+                  // const status = document.getElementById('response-status-value');
+                  const tokenHTML = document.getElementById('response-token-value');
+
+                  // status.textContent = params.status;
+                  tokenHTML.textContent = token.bayonet_id;
+                },
+            });
+        };
+    </script>
+</body>
+
+</html>

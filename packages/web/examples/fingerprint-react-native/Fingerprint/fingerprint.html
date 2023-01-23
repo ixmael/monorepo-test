@@ -1,0 +1,18 @@
+<html>
+
+<head></head>
+
+<body>
+  <div id="test">ah</div>
+  <script type="text/javascript" onload="initBayonet();" src="http://localhost:3100/js/analytics.js"></script>
+  <script type="text/javascript" onload="initBayonet();">
+    window.ReactNativeWebView.postMessage("start");
+    const testNode = document.getElementById('test');
+    testNode.innerHTML = 'loading';
+    function initBayonet() {
+      window.ReactNativeWebView.postMessage("probando ${jsKey}");
+    }
+  </script>
+</body>
+
+</html>
